@@ -1,0 +1,98 @@
+#!/usr/bin/python
+import sys
+import speech_recognition as sr
+recog=sr.Recognizer()
+sys.path.append('/libs/')
+sys.path.append('/smarty_lib/')
+import os
+from libs.ColorPython import Color
+import smarty_lib
+from smarty_lib.mathy import *
+from smarty_lib.mysystem import *
+from smarty_lib.dumblib import *
+from smarty_lib.dblite import *
+try:
+    clear()
+    print(Color.bold['green'] + "*" * os.get_terminal_size()[0] + Color.reset)
+    print("\t\t\t\t    " +Color.bold['purple'] + responces[0] + Color.reset)
+    print(Color.bold['green'] + "*" * os.get_terminal_size()[0] + Color.reset) 
+    print( Color.bold['white'] + responces[1] + Color.reset)
+    pc=0
+    print( Color.bold['yellow'] + "enter 1 for help" + Color.reset)
+    print( Color.bold['cyan'] + "enter 2 for speech mode" + Color.reset )
+    print( Color.bold['red'] + "enter 3 for text mode" + Color.reset)
+    print()
+    print(Color.bold['blue'] + "Enter" + Color.bold['yellow'] + ">" + Color.bold['red'] + ">" + Color.bold['green'] + ">" ,end=' ')
+    pc=int(input())
+    if pc>3:
+        exit()
+    pl=0
+    if pc==1:
+        help()
+        pc=3
+    while True:
+        print()
+        temp=""
+        text=""
+        if pc==2:
+            with sr.Microphone() as source:
+                if pl==0:
+                    clear()
+                    print(responces[0])
+                    print(responces[1])
+                    pl=1
+                print("say something.....")
+                audio=recog.listen(source)
+                try:
+                    temp=recog.recognize_google(audio)
+                except:
+                    print("cant recognize")            
+        else:
+            print( Color.bold['blue'] + "!" *os.get_terminal_size()[0] + Color.reset)
+            print(Color.bold['red']+"ENTER "+Color.reset+Color.bold['cyan']+"THE "+Color.reset+Color.bold['green']+"COMMAND:"+Color.reset,end='')
+            temp=input()
+        text=[]
+        insert_into_database(temp)
+        for i in temp.split(' '):
+            if i.upper() in required:
+                text.append(i)
+        for word in text:
+            if word.upper() in operations.keys():
+                try:
+                    l=extract_numbers_from_text(temp)
+                    r=operations[word.upper()](l)
+                except:
+                    print("Something is wrong, please retry")
+                finally:
+                    break
+            elif word.upper() in commands.keys():
+                commands[word.upper()]()
+                break
+            elif word.upper() in commands1.keys():
+                commands1[word.upper()]()
+                break
+            elif word.upper() in db.keys():
+                db[word.upper()]()
+                break
+            elif word.upper() in commands2.keys():
+                try: 
+                    l1=extract_numbers_from_text(temp)
+                    arg=[]
+                    if (len(text)!=1):
+                        for i in text:
+                            if i.upper() in checkpoint:
+                                arg.append(i.upper())
+                    for i in l1:
+                            arg.append(i)
+                    commands2[word.upper()](arg)
+                except:
+                    print("something is wrong,please retry")
+                finally:
+                    break
+        else:
+            if ('www' in temp) or ('google' in temp) or ('search' in temp):
+                google(temp)
+            else:
+                sorry()
+except:
+    exit()

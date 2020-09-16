@@ -1,5 +1,5 @@
 # Smarty-a-Mini-assistant-for-linux-users
-This is a research based application for providing ease to linux users. this application can perform almost all the functions needed by a linux users easily. some of them were listed below along with examples, how to talk with smarty.
+<p>This is a research based application for providing ease to linux users. this application can perform almost all the functions needed by a linux users easily. some of them were listed below along with examples, how to talk with smarty.
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 (1)Calculations
 DESCRIPTION:
@@ -119,3 +119,4 @@ provide me command history
 
 >>>>>> For the concliusion part, i am in a way to build a application using wich every normal person in the world can have the beauty of Linux Opereting system.
        its continuously in development phase.
+</p>
